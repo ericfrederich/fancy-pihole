@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 
+import os
 import re
 import shlex
 from subprocess import check_call
 
 from bottle import request, route, run
 
+SECRET = os.environ.get("FANCY_SERVICE_SECRET")
+
 
 @route("/block", method="PUT")
 def block():
-    if request.json.get("secret") != "HARD_CODED_SECRET":
+    if request.json.get("secret") != SECRET:
         return
 
     args = []
@@ -24,7 +27,7 @@ def block():
 
 @route("/unblock", method="PUT")
 def unblock():
-    if request.json.get("secret") != "HARD_CODED_SECRET":
+    if request.json.get("secret") != SECRET:
         return
 
     args = []
