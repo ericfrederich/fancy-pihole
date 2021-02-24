@@ -15,17 +15,15 @@ Hence, this repo was made.
 
 ## Differences original
 
-* The Python server would not start automatically.  This image's server integrates with the already present [S6 Overlay](https://github.com/just-containers/s6-overlay) that is used to run pihole itself.  This means if the python server process crashes for any reason it'll get restarted.
+* Python starts automatically.  It integrates with the already present [S6 Overlay](https://github.com/just-containers/s6-overlay) that is used to run pihole itself.  This means if the python server process crashes for any reason it'll get restarted.
 
-* The original had hard coded sites in .sh files; this takes a list of sites as a parameter.  This means you can edit the sites on ifttt or wherever you're making the API calls from.
+* API itself accepts a list of sites (original had sites hard coded in .sh files).  This means you can edit the sites on ifttt or wherever you're making the API calls from.
 
-* The original script had no security token.  Since the API needs to be called from over the internet (i.e. from ifttt) it should some some security.  Run with `-e FANCY_SERVICE_SECRET=xxxx`
+* Utilizes a secret tokan.  Since the API needs to be called from over the internet (i.e. from ifttt) it should be secured.  You set the token at Docker run time with `-e FANCY_SERVICE_SECRET=xxxx`.
 
-* Uses `PUT` instead of `GET`
+* API uses `PUT` instead of `GET`
 
-## Example
-
-Make sure you're using `PUT` instead of `GET`.  The body should look something like this:
+## Example body
 
 ```json
 {"secret":"the_fancy_service_secret", "sites":["youtube.com", "netflix.com", "hulu.com"]}
